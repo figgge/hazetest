@@ -10,6 +10,7 @@ import redis.clients.jedis.util.SafeEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -90,9 +91,10 @@ public class HazeIT {
 
     private static int findFreePort() {
         int port = 0;
-        try (ServerSocket socket = new ServerSocket(0)) {
-            // Disable timeout and reuse address after closing the socket.
+        try (ServerSocket socket = new ServerSocket()) {
+            // Allow direct reuse of port after closing the socket.
             socket.setReuseAddress(true);
+            socket.bind(new InetSocketAddress("localhost", 0));
             port = socket.getLocalPort();
         } catch (IOException ignored) {
         }
