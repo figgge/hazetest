@@ -33,4 +33,12 @@ class HazeDatabaseTest {
 
         assertThat(testDatabase.exists("name")).isEqualTo(":1\r\n");
     }
+
+    @Test
+    void testAskingExistsFunctionForNumerousKeysWhereOneKeyHasTwoOccurrencesAndTheOtherKeyHasOneOccurrenceShouldReturnThree() {
+        testDatabase.setNX("name", "saher");
+        testDatabase.setNX("1", "Hej");
+
+        assertThat(testDatabase.exists("name", "1", "name", "2")).isEqualTo(":3\r\n");
+    }
 }
