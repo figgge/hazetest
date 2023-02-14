@@ -41,4 +41,12 @@ class HazeDatabaseTest {
 
         assertThat(testDatabase.exists("name", "1", "name", "2")).isEqualTo(":3\r\n");
     }
+
+    @Test
+    void testSendingInNoParametersToExistsMethodReturnsZero() {
+        testDatabase.setNX("name", "saher");
+        testDatabase.setNX("1", "Hej");
+
+        assertThat(testDatabase.exists()).isEqualTo(":0\r\n");
+    }
 }
