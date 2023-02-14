@@ -47,7 +47,7 @@ public class HazeDatabase {
         return "";
     }
 
-    public int exists(String... key) {
+    public String exists(String... key) {
         lock.lock();
         int numberOfKeys = 0;
         try {
@@ -60,7 +60,7 @@ public class HazeDatabase {
             lock.unlock();
 
         }
-        return numberOfKeys;
+        return ":" + numberOfKeys + "\r\n";
     }
 
     public String setNX(String key, String value) {
